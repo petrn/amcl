@@ -79,6 +79,8 @@ extern int  ECP_ZZZ_PUBLIC_KEY_VALIDATE(octet *W);
 	@return 0 or an error code
  */
 extern int ECP_ZZZ_SVDP_DH(octet *s,octet *W,octet *K);
+extern int ECP_ZZZ_SVDP_DH_POINT(octet *s,octet *W,octet *K);
+extern int ECP_ZZZ_MUL_ADD(octet *s,octet *W,octet *K);
 /*extern int ECPSVDP_DHC(octet *,octet *,int,octet *);*/
 
 /*#if CURVETYPE!=MONTGOMERY */

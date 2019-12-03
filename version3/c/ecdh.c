@@ -134,6 +134,65 @@ int ECP_ZZZ_SVDP_DH(octet *S, octet *WD, octet *Z)
     return res;
 }
 
+int ECP_ZZZ_SVDP_DH_POINT(octet *S, octet *WD, octet *Z)
+{
+    BIG_XXX r, s;
+    int valid;
+    ECP_ZZZ W;
+    int res = 0;
+
+    BIG_XXX_fromBytes(s, S->val);
+
+    valid = ECP_ZZZ_fromOctet(&W, WD);
+
+    if (!valid) res = ECDH_ERROR;
+    if (res == 0)
+    {
+        BIG_XXX_rcopy(r, CURVE_Order_ZZZ);
+        BIG_XXX_mod(s, r);
+
+        ECP_ZZZ_mul(&W, s);
+        if (ECP_ZZZ_isinf(&W)) res = ECDH_ERROR;
+        else
+        {
+            ECP_ZZZ_toOctet(Z, &W, false);
+        }
+    }
+    return res;
+}
+
+int ECP_ZZZ_MUL_ADD(octet *S, octet *H, octet *Z)
+{
+    BIG_XXX s;
+    int valid;
+    ECP_ZZZ W;
+    ECP_ZZZ G;
+    int res = 0;
+
+    ECP_ZZZ_generator(&G);
+
+    BIG_XXX_fromBytes(s, S->val);
+
+    valid = ECP_ZZZ_fromOctet(&W, H);
+
+    if (!valid) res = ECDH_ERROR;
+    if (res == 0)
+    {
+        ECP_ZZZ_mul(&G, s);
+        if (ECP_ZZZ_isinf(&G)) res = ECDH_ERROR;
+        else
+        {
+            ECP_ZZZ_add(&G, &W);
+            if (ECP_ZZZ_isinf(&G)) res = ECDH_ERROR;
+            else
+            {
+                ECP_ZZZ_toOctet(Z, &G, false);
+            }
+        }
+    }
+    return res;
+}
+
 #if CURVETYPE_ZZZ!=MONTGOMERY
 
 /* IEEE ECDSA Signature, C and D are signature on F using private key S */
