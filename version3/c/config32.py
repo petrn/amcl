@@ -477,9 +477,12 @@ print("27. RSA2048")
 print("28. RSA3072")
 print("29. RSA4096")
 
+print("PRIVATE")
+print("30. BRAINPOOLP256R1")
+
 selection=[]
 ptr=0
-max=30
+max=31
 
 curve_selected=False
 pfcurve_selected=False
@@ -526,6 +529,9 @@ while ptr<max:
 		curve_selected=True
 	if x==4:
 		curveset("256","BRAINPOOL","BRAINPOOL","32","28","256","7","NOT_SPECIAL","WEIERSTRASS","NOT","","","","128")
+		curve_selected=True
+	if x==30:
+		curveset("256","BRAINPOOLP256R1","BRAINPOOLP256R1","32","28","256","7","NOT_SPECIAL","WEIERSTRASS","NOT","","","","128")
 		curve_selected=True
 	if x==5:
 		curveset("256","ANSSI","ANSSI","32","28","256","7","NOT_SPECIAL","WEIERSTRASS","NOT","","","","128")
