@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 deltext=""
-if sys.platform.startswith("linux")  :
+if sys.platform.startswith("linux") or sys.platform.startswith("cygwin")  :
 	deltext="rm"
 	copytext="cp"
 if sys.platform.startswith("darwin")  :
